@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'Detail.dart';
 
 import 'package:flutter/rendering.dart';
 
@@ -26,6 +27,12 @@ class _HomeState extends State<Home> {
         snapshot = datasnapshot.documents;
       });
     });
+  }
+
+  passData(DocumentSnapshot snap) {
+    Navigator.of(context).push(new MaterialPageRoute(
+      builder:  (context) => Detail(snapshot: snap,)
+    ));
   }
 
   @override
@@ -62,14 +69,19 @@ class _HomeState extends State<Home> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        new Text(
-                          snapshot[index].data["title"],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
+                        new InkWell(
+                          child: new Text(
+                            snapshot[index].data["title"],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
                           ),
-                          maxLines: 1,
+                          onTap: () {
+                            passData(snapshot[index]);
+                          },
                         ),
                         new SizedBox(height: 5.0,),
                         new Text(
