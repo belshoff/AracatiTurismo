@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
+import 'package:flutter/rendering.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -31,25 +33,55 @@ class _HomeState extends State<Home> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Aracati Turismo"),
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.cyan[700],
+        centerTitle: true,
       ),
       body: new ListView.builder(
-        itemCount: snapshot.length,
+        itemCount: snapshot.length != null ? snapshot.length : 0,
         itemBuilder: ((context, index) {
           return new Card(
             elevation: 10.0,
+            color: Colors.cyan[700],
             margin: EdgeInsets.all(10.0),
             child: new Container(
-              child: new Row(
+              padding: EdgeInsets.all(10.0),
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  new CircleAvatar(
-                    child: new Text(snapshot[index].data["title"][0]),
+                  new Image.network(
+                    "${snapshot[index].data["image"]}",
+                    alignment: Alignment.topLeft,
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width*0.95,
+                    // scale: 3.5,
                   ),
                   new Container(
+                    margin: EdgeInsets.only(top: 10.0),
+                    width: MediaQuery.of(context).size.width*0.75,
                     child: new Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        new Text(snapshot[index].data["title"]),
-                        new Text(snapshot[index].data["content"]),
+                        new Text(
+                          snapshot[index].data["title"],
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                        ),
+                        new SizedBox(height: 5.0,),
+                        new Text(
+                          snapshot[index].data["content"],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17.5
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     ),
                   ),
