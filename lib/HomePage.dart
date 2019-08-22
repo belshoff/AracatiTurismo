@@ -15,9 +15,9 @@ class _HomeState extends State<Home> {
 
   StreamSubscription<QuerySnapshot> subscription;
 
-  List<DocumentSnapshot> snapshot;
+  List<DocumentSnapshot> snapshot = [];
 
-  CollectionReference collectionReference = Firestore.instance.collection("Post");
+  CollectionReference collectionReference = Firestore.instance.collection("infos");
 
   void initState() {
     super.initState();
@@ -52,26 +52,26 @@ class _HomeState extends State<Home> {
             margin: EdgeInsets.all(10.0),
             child: new Container(
               padding: EdgeInsets.all(10.0),
-              child: new Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  new Image.network(
-                    "${snapshot[index].data["image"]}",
-                    alignment: Alignment.topLeft,
-                    fit: BoxFit.cover,
-                    width: MediaQuery.of(context).size.width*0.95,
-                    // scale: 3.5,
-                  ),
-                  new Container(
-                    margin: EdgeInsets.only(top: 10.0),
-                    width: MediaQuery.of(context).size.width*0.75,
-                    child: new Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        new InkWell(
-                          child: new Text(
-                            snapshot[index].data["title"],
+              child: new InkWell(
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new Image.network(
+                      "${snapshot[index].data["imagem"]}",
+                      alignment: Alignment.topLeft,
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width*0.95,
+                      // scale: 3.5,
+                    ),
+                    new Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      width: MediaQuery.of(context).size.width*0.75,
+                      child: new Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          new Text(
+                            snapshot[index].data["titulo"],
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 25.0,
@@ -79,25 +79,25 @@ class _HomeState extends State<Home> {
                             ),
                             maxLines: 1,
                           ),
-                          onTap: () {
-                            passData(snapshot[index]);
-                          },
-                        ),
-                        new SizedBox(height: 5.0,),
-                        new Text(
-                          snapshot[index].data["content"],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17.5
+                          new SizedBox(height: 5.0,),
+                          new Text(
+                            snapshot[index].data["descricao"],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.5
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                onTap: () {
+                  passData(snapshot[index]);
+                },
               ),
             ),
           );
